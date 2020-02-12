@@ -17,6 +17,9 @@ environment:
   sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
+  camera: ^0.5.7+3
+  path_provider: ^1.6.0
+  path: ^1.6.4
   flutter:
     sdk: flutter
 
