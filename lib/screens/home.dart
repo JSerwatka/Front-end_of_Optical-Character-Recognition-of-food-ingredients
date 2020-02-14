@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import 'package:substances_ocr_app/custom_widgets/buttons.dart';
+import 'package:substances_ocr_app/custom_widgets/buttons.dart';
 import 'package:substances_ocr_app/screens/camera.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -9,8 +11,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
-  int _selectedPage = 0;
 
   // create a dialog "add new substance" function
   createAddDialog(BuildContext context){
@@ -140,32 +140,36 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       // ---- bottom ----
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _selectedPage,
-        backgroundColor: Colors.grey[100],
-        fixedColor: Colors.teal,
-        items: [
-          BottomNavigationBarItem(
-            title: Text("Główna"),
-            icon: Icon(Icons.home),
+      bottomNavigationBar: BottomAppBar(
+        color: Colors.grey[100],
+        child: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: <Widget>[
+//              BottomButton(
+//                label: "Główna",
+//                icon: Icons.home,
+//                onPressed: () {},
+//              ),
+              BottomButton(
+                label: "Skanuj",
+                icon: Icons.camera_alt,
+                onPressed: () {
+                  Navigator.pushNamed(context, "/camera");
+                },
+              ),
+              BottomButton(
+                  label: "Dodaj",
+                  icon: Icons.add,
+                  onPressed: () {
+                    createAddDialog(context);
+                  },
+              ),
+            ],
           ),
-          BottomNavigationBarItem(
-            title: Text("Skanuj"),
-            icon: Icon(Icons.camera_alt),
-          ),
-          BottomNavigationBarItem(
-            title: Text("Dodaj"),
-            icon: Icon(Icons.add),
-          ),
-        ],
-        onTap: (index) {
-          setState(() {
-            _selectedPage = index;
-          });
-        },
-      ),
+        )
+      )
     );
   }
 }
-
-

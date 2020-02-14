@@ -17,7 +17,7 @@ Future<void> main() async {
   final firstCamera = cameras.first;
 
   runApp(MaterialApp(
-    initialRoute: '/camera',
+    initialRoute: '/main',
     routes: {
       '/': (context) => Loading(),
       '/main': (context) => HomeScreen(),

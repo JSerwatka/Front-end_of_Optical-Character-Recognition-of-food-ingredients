@@ -20,6 +20,7 @@ dependencies:
   camera: ^0.5.7+3
   path_provider: ^1.6.0
   path: ^1.6.4
+  image_cropper: ^1.2.1
   flutter:
     sdk: flutter
 

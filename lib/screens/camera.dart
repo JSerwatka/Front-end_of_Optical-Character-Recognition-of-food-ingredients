@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart';
 import 'dart:async';
@@ -21,6 +22,7 @@ class _CameraScreenState extends State<CameraScreen> {
 
   CameraController _controller;
   Future<void> _initializeControllerFuture;
+  File _croppedFile;
 
   @override
   void initState(){
@@ -83,6 +85,27 @@ class _CameraScreenState extends State<CameraScreen> {
 
             // Attempt to take a picture and log where it's been saved.
             await _controller.takePicture(path);
+
+//            _croppedFile = await ImageCropper.cropImage(
+//              sourcePath: path,
+//              cropStyle: CropStyle.rectangle,
+//              aspectRatioPresets: [
+//                CropAspectRatioPreset.square,
+//                CropAspectRatioPreset.ratio3x2,
+//                CropAspectRatioPreset.original,
+//                CropAspectRatioPreset.ratio4x3,
+//                CropAspectRatioPreset.ratio16x9
+//              ],
+//              androidUiSettings: AndroidUiSettings(
+//                  toolbarTitle: 'Cropper',
+//                  toolbarColor: Colors.deepOrange,
+//                  toolbarWidgetColor: Colors.white,
+//                  initAspectRatio: CropAspectRatioPreset.original,
+//                  lockAspectRatio: false),
+//              iosUiSettings: IOSUiSettings(
+//                minimumAspectRatio: 1.0,
+//              )
+//            );
 
             // If the picture was taken, display it on a new screen.
             Navigator.push(
