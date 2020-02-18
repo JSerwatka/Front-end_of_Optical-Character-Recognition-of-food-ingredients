@@ -2,7 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:substances_ocr_app/custom_widgets/buttons.dart';
-import 'package:substances_ocr_app/custom_widgets/buttons.dart';
+import 'package:substances_ocr_app/classes/image_capture.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:substances_ocr_app/screens/camera.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -11,7 +12,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
+  ImageCaptureState capturedImage = ImageCaptureState();
   // create a dialog "add new substance" function
   createAddDialog(BuildContext context){
 
@@ -156,7 +157,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 label: "Skanuj",
                 icon: Icons.camera_alt,
                 onPressed: () {
-                  Navigator.pushNamed(context, "/camera");
+                  capturedImage.pickAndCropImage(ImageSource.camera);
+                  MyImage(myImage: capturedImage.imageFile);
                 },
               ),
               BottomButton(

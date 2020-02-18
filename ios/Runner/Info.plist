@@ -41,5 +41,10 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>NSPhotoLibraryUsageDescription</key>
+    <string>Aplikacja potrzebuje dostępu do galerii, aby następnie zeskanować składu produktu</string>
+    <key>NSCameraUsageDescription</key>
+    <string>Aplikacja potrzebuje użycia kamery do zeskanowania składu produktu</string>
+
 </dict>
 </plist>
