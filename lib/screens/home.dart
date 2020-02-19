@@ -78,15 +78,20 @@ class _HomeScreenState extends State<HomeScreen> {
       // ---- head ----
       appBar: AppBar(
         // title
-        title: Text("OCR Substances"),
-        backgroundColor: Colors.lightBlue[700],
+        title: Text(
+            "OCR Substances",
+          style: TextStyle(
+            color: Colors.grey[800],
+          ),
+        ),
+        backgroundColor: Colors.lightBlue[100],
         centerTitle: true,
         //settings icon
         leading: IconButton(
             onPressed: () =>_scaffoldKey.currentState.openDrawer(),
             icon: Icon(
               Icons.view_headline,
-              color: Colors.grey[300],
+              color: Colors.grey[700],
             ),
         ),
         // search icon
@@ -97,7 +102,7 @@ class _HomeScreenState extends State<HomeScreen> {
               },
               icon: Icon(
                 Icons.search,
-                color: Colors.grey[300],
+                color: Colors.grey[700],
               ),
           ),
         ],
@@ -109,13 +114,13 @@ class _HomeScreenState extends State<HomeScreen> {
           children: <Widget>[
             DrawerHeader(
               decoration: BoxDecoration(
-                color: Colors.blue,
+                color: Colors.lightBlue[100],
               ),
               child: Center(
                 child: Text(
-                  'TEST',
+                  'xddd',
                   style: TextStyle(
-                    color: Colors.white,
+                    color: Colors.black,
                     fontSize: 24,
                   ),
                 ),
@@ -148,17 +153,26 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
-//              BottomButton(
-//                label: "Główna",
-//                icon: Icons.home,
-//                onPressed: () {},
-//              ),
               BottomButton(
                 label: "Skanuj",
                 icon: Icons.camera_alt,
-                onPressed: () {
-                  capturedImage.pickAndCropImage(ImageSource.camera);
-                  MyImage(myImage: capturedImage.imageFile);
+                onPressed: () async {
+                  await capturedImage.pickAndCropImage(ImageSource.camera);
+                  if (capturedImage.imageFile != null) {
+                    Navigator.pushNamed(
+                        context, "/camera", arguments: capturedImage.imageFile);
+                  }
+                },
+              ),
+              BottomButton(
+                label: "Wybierz",
+                icon: Icons.insert_photo,
+                onPressed: () async {
+                  await capturedImage.pickAndCropImage(ImageSource.gallery);
+                  if (capturedImage.imageFile != null){
+                    Navigator.pushNamed(
+                        context, "/camera", arguments: capturedImage.imageFile);
+                  }
                 },
               ),
               BottomButton(

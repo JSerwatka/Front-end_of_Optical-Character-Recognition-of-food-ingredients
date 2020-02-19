@@ -5,7 +5,7 @@ import 'package:substances_ocr_app/screens/home.dart';
 import 'package:substances_ocr_app/screens/camera.dart';
 import 'package:substances_ocr_app/screens/history.dart';
 
-Future<void> main(){
+void main(){
 
   runApp(MaterialApp(
     initialRoute: '/main',
