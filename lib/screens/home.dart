@@ -4,7 +4,6 @@ import 'package:flutter/painting.dart';
 import 'package:substances_ocr_app/custom_widgets/buttons.dart';
 import 'package:substances_ocr_app/classes/image_capture.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:substances_ocr_app/screens/camera.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -12,7 +11,19 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+
+  Icon _customSearchIcon = Icon(
+      Icons.search,
+      color: Colors.grey[700],
+  );
+  Widget _customSearchBar = Text(
+      "OCR Substances",
+      style: TextStyle(
+        color: Colors.grey[800],
+      )
+  );
   ImageCaptureState capturedImage = ImageCaptureState();
+
   // create a dialog "add new substance" function
   createAddDialog(BuildContext context){
 
@@ -37,10 +48,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 "dodaj",
                 style: TextStyle(
                   fontSize: 17.0,
-                  color: Colors.green[600],
+                  color: Colors.green[500],
                 ),
               ),
-              onPressed: () {},
+              onPressed: () {
+              },
             ),
           ],
         );
@@ -48,26 +60,28 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  // search bar to implement
-//  void _searchPressed() {
-//    setState(() {
-//      if (this._searchIcon.icon == Icons.search) {
-//        this._searchIcon = new Icon(Icons.close);
-//        this._appBarTitle = new TextField(
-//          controller: _filter,
-//          decoration: new InputDecoration(
-//              prefixIcon: new Icon(Icons.search),
-//              hintText: 'Search...'
-//          ),
-//        );
-//      } else {
-//        this._searchIcon = new Icon(Icons.search);
-//        this._appBarTitle = new Text('Search Example');
-//        filteredNames = names;
-//        _filter.clear();
-//      }
-//    });
-//  }
+  // Basic search bar without connection to db
+  void _searchPressed() {
+    setState(() {
+      if (this._customSearchIcon.icon == Icons.search) {
+        this._customSearchIcon = Icon(Icons.close, color: Colors.grey[700]);
+        this._customSearchBar = TextField(
+          decoration: InputDecoration(
+              prefixIcon: Icon(Icons.search),
+              hintText: 'Wyszukaj...'
+          ),
+        );
+      } else {
+        this._customSearchIcon = Icon(Icons.search, color: Colors.grey[700]);
+        this._customSearchBar = Text(
+          "OCR Substances",
+          style: TextStyle(
+          color: Colors.grey[800],
+          )
+        );
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -78,34 +92,35 @@ class _HomeScreenState extends State<HomeScreen> {
       // ---- head ----
       appBar: AppBar(
         // title
-        title: Text(
-            "OCR Substances",
-          style: TextStyle(
-            color: Colors.grey[800],
-          ),
-        ),
+        title: _customSearchBar,
         backgroundColor: Colors.lightBlue[100],
         centerTitle: true,
         //settings icon
         leading: IconButton(
-            onPressed: () =>_scaffoldKey.currentState.openDrawer(),
-            icon: Icon(
-              Icons.view_headline,
-              color: Colors.grey[700],
-            ),
+          icon: Icon(
+            Icons.view_headline,
+            color: Colors.grey[700],
+          ),
+          onPressed: () =>_scaffoldKey.currentState.openDrawer(),
         ),
         // search icon
         actions: <Widget>[
           IconButton(
-              onPressed: () {
-                print('search pressed');
-              },
-              icon: Icon(
-                Icons.search,
-                color: Colors.grey[700],
-              ),
+            icon: this._customSearchIcon,
+            onPressed: () {
+              _searchPressed();
+            },
           ),
         ],
+      ),
+        // ----- body -----
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/products.jpeg"),
+            fit: BoxFit.fill,
+          ),
+        ),
       ),
       // ----- drawer -----
       drawer: Drawer(
@@ -158,9 +173,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 icon: Icons.camera_alt,
                 onPressed: () async {
                   await capturedImage.pickAndCropImage(ImageSource.camera);
-                  if (capturedImage.imageFile != null) {
+                  if (capturedImage.imageToSend != null) {
                     Navigator.pushNamed(
-                        context, "/camera", arguments: capturedImage.imageFile);
+                        context, "/camera", arguments: capturedImage.imageToSend);
                   }
                 },
               ),
@@ -169,9 +184,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 icon: Icons.insert_photo,
                 onPressed: () async {
                   await capturedImage.pickAndCropImage(ImageSource.gallery);
-                  if (capturedImage.imageFile != null){
+                  if (capturedImage.imageToSend != null){
                     Navigator.pushNamed(
-                        context, "/camera", arguments: capturedImage.imageFile);
+                        context, "/camera", arguments: capturedImage.imageToSend);
                   }
                 },
               ),

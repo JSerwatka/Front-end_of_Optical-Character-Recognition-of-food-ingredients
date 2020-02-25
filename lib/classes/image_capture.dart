@@ -5,25 +5,27 @@ import 'dart:async';
 import 'dart:io';
 
 class ImageCaptureState {
-
-  File imageFile;
+  // Using _privateImage to make sure that when photo is taken and cropping
+  // is canceled, that photo is not being send to evaluate
+  File _privateImage;
+  File imageToSend;
 
   // Select an image via gallery or camera
   Future<void> pickImage(ImageSource source) async {
     try {
       File selected = await ImagePicker.pickImage(source: source);
-      this.imageFile = selected;
+      this._privateImage = selected;
     }
     catch (e){
       print("cought error: $e");
-      this.imageFile = null;
+      this.imageToSend = null;
     }
   }
 
   Future<void> cropImage() async{
     try {
       File cropped = await ImageCropper.cropImage(
-          sourcePath: this.imageFile.path,
+          sourcePath: this._privateImage.path,
           aspectRatioPresets: [
             CropAspectRatioPreset.square,
             CropAspectRatioPreset.ratio3x2,
@@ -42,11 +44,11 @@ class ImageCaptureState {
           )
       );
 
-      this.imageFile =  cropped ?? this.imageFile;
+      this.imageToSend =  cropped;
     }
     catch (e){
       print("cought error: $e");
-      this.imageFile = null;
+      this.imageToSend = null;
     }
   }
 
